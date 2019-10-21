@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="address" class="SpringTest.Beans.AutoWire.Address"
+          p:city="Shanghai" p:street="Nanjing Road"></bean>
+
+    <bean id="car" class="SpringTest.Beans.AutoWire.Car"
+          p:brand="Audi" p:price="300000"></bean>
+
+        <!--普通的装配方式-->
+        <!--<bean id="person" class="Person"-->
+        <!--      p:name="Queen" p:address-ref="address" p:car-ref="car"/>-->
+        <!--
+        可以使用autowire属性指定自动装配的方式，
+        byName根据bean的名字和当前bean的setter风格的属性名进行自动装配，若有匹配的，则进行自动装配，若无匹配的则不装配
+        byType根据bean的类型和当前bean的属性的类型进行自动装配，若IOC容器中有一个以上的类型匹配的bean，则抛异常。
+        -->
+    <bean id="person" class="SpringTest.Beans.AutoWire.Person"
+          p:name="Queen" autowire="byName"/>
+
+
+    <!--  bean配置的继承：使用parent属性指定继承哪个bean的配置  -->
+    <bean id="address2"  parent="address" p:street="dianshan lake"></bean>
+
+    <!-- 抽象bean：bean 的 abstract属性为true的bean。这样的bean不能被实例化，只能被继承配置
+若莫一个bean的class属性没有被指定，则该bean必须是一个抽象bean-->
+    <bean id="address3" class="SpringTest.Beans.AutoWire.Address"
+    p:city="Beijing" p:street="qianmen" abstract="true"></bean>
+
+    <bean id="car4" class="SpringTest.Beans.AutoWire.Car"
+          p:brand="suzuki" p:price="100000"></bean>
+
+    <bean id="person2" class="SpringTest.Beans.AutoWire.Person"
+          p:address-ref="address" depends-on="car4" p:name="King"></bean>
+
+
+</beans>

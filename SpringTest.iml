@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="FacetManager">
+    <facet type="Spring" name="Spring">
+      <configuration>
+        <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/src/resources/spring-config.xml</file>
+          <file>file://$MODULE_DIR$/src/resources/beans-properties.xml</file>
+          <file>file://$MODULE_DIR$/src/resources/beans-autowire.xml</file>
+          <file>file://$MODULE_DIR$/src/resources/beans-scope.xml</file>
+          <file>file://$MODULE_DIR$/src/resources/beans-spel.xml</file>
+          <file>file://$MODULE_DIR$/src/resources/beans-annotation.xml</file>
+          <file>file://$MODULE_DIR$/src/resources/beans-generic-di.xml</file>
+          <file>file://$MODULE_DIR$/src/resources/beans-aop.xml</file>
+          <file>file://$MODULE_DIR$/src/resources/beans-aop-xml.xml</file>
+          <file>file://$MODULE_DIR$/src/resources/applicationContext.xml</file>
+        </fileset>
+      </configuration>
+    </facet>
+  </component>
+</module>
