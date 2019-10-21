@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+
+    <bean id="hello" class="SpringTest.Beans.HelloWold">
+        <property name="name" value="Spring"></property>
+    </bean>
+
+<!--    通过构造器来配置Bean属性-->
+    <bean id="car" class="SpringTest.Beans.Car">
+        <constructor-arg value="BMW"></constructor-arg>
+        <constructor-arg value="Bejing"></constructor-arg>
+        <constructor-arg value="250" type="int"></constructor-arg>
+    </bean>
+
+<!--    使用构造器注入属性值可以指定参数的位置和参数类型-->
+    <bean id="car2" class="SpringTest.Beans.Car">
+        <constructor-arg index="0" type="java.lang.String" value="Audi"/>
+        <constructor-arg index="1" type="java.lang.String" value="Shanghai"/>
+        <constructor-arg index="2" type="double" value="300000"/>
+    </bean>
+
+    <bean id="person" class="SpringTest.Beans.Person">
+        <constructor-arg index="0" value="小明"/>
+        <constructor-arg index="1" value="20"/>
+<!--        使用ref属性，建立Bean之间的引用关系-->
+        <constructor-arg index="2" ref="car"/>
+    </bean>
+
+    <bean id="person1" class="SpringTest.Beans.Person">
+        <constructor-arg index="0" value="小明"/>
+        <constructor-arg index="1" value="20"/>
+        <!--内部Bean-->
+        <property name="car">
+            <bean class="SpringTest.Beans.Car">
+                <constructor-arg index="0" type="java.lang.String" value="Ford"/>
+                <constructor-arg index="1" type="java.lang.String" value="Guangzhou"/>
+                <constructor-arg index="2" type="double" value="200000"/>
+            </bean>
+        </property>
+    </bean>
+
+<!--    测试配置集合属性-->
+    <bean id="person3" class="SpringTest.Beans.Collocation.Person">
+        <property name="name" value="小红"></property>
+        <property name="age" value="18"></property>
+        <property name="cars">
+            <list>
+                <ref bean="car"></ref>
+                <ref bean="car2"></ref>
+                <bean class="SpringTest.Beans.Car">
+                    <constructor-arg index="0" type="java.lang.String" value="Ford"/>
+                    <constructor-arg index="1" type="java.lang.String" value="Guangzhou"/>
+                    <constructor-arg index="2" type="double" value="200000"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <!--配置map属性值 -->
+    <bean id="newPerson" class="SpringTest.Beans.Collocation.NewPerson">
+        <property name="name" value="小李"></property>
+        <property name="age" value="30"></property>
+        <property name="cars" >
+<!--            使用Map节点及map的entry子节点配置Map类型的成员变量-->
+            <map>
+                <entry key="1" value-ref="car"></entry>
+                <entry key="2" value-ref="car2"></entry>
+                <entry key="3">
+                    <bean class="SpringTest.Beans.Car">
+                        <constructor-arg index="0" type="java.lang.String" value="Ford"/>
+                        <constructor-arg index="1" type="java.lang.String" value="Guangzhou"/>
+                        <constructor-arg index="2" type="double" value="200000"/>
+                    </bean>
+                </entry>
+            </map>
+        </property>
+    </bean>
+
+<!--    配置properties属性值-->
+    <bean id="dataSource" class="SpringTest.Beans.Collocation.DataSource">
+        <property name="properties">
+<!--            使用props节点及prop子节点为properties属性赋值-->
+            <props>
+                <prop key="user">root</prop>
+                <prop key="password">123456</prop>
+                <prop key="jdbcUrl">jdbc:mysql:///test</prop>
+                <prop key="driverClass">com.mysql.jdbc.Driver</prop>
+            </props>
+        </property>
+    </bean>
+<!--配置单列集合bean，以供多个bean引用，需要导入util命名空间-->
+    <util:list id="cars">
+        <ref bean="car"/>
+        <ref bean="car2"/>
+    </util:list>
+
+    <bean id="person2" class="SpringTest.Beans.Collocation.Person">
+        <property name="name" value="小王"/>
+        <property name="age" value="35"/>
+        <property name="cars" ref="cars"/>
+    </bean>
+<!--通过p命名空间为bean的属性赋值，需要先导入p命名空间-->
+    <bean id="person4" class="SpringTest.Beans.Collocation.Person" p:age="19"
+          p:name="小张" p:cars-ref="cars"></bean>
+
+</beans>
